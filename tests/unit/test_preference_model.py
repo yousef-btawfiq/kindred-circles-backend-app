@@ -1,5 +1,8 @@
 import pytest 
 from app.models import Preferences
+from freezegun import freeze_time
+from tests.conftest import TIMEFREEZE
+from datetime import datetime
 import json
 
 def test_from_dict_creates_preferences(preferences_data):
@@ -43,3 +46,13 @@ def test_topics_invalid_identifier(preferences_data):
     with pytest.raises(ValueError) as ve:
         Preferences.from_dict("testuser", preferences_data)
     assert str(ve.value) == "Invalid topic identifier: invalid_topic"
+
+@freeze_time(TIMEFREEZE)
+def test_to_dict(preferences_data):
+    prefs = Preferences.from_dict("testuser", preferences_data)
+    prefs.created_at = datetime.now()
+    prefs_dict = prefs.to_dict()
+
+    assert prefs_dict["user_id"] == "testuser"
+    assert prefs_dict["camera_ok"] == preferences_data["camera_ok"]
+    assert prefs_dict["topics"] == preferences_data["topics"]   

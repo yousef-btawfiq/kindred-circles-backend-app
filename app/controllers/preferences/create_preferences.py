@@ -14,7 +14,7 @@ def create_user_preferences(user_id):
             return {"error": f"Missing required parameter: {param}"}, 400
     # Verify User ID presence
     try:
-        user = User.query.filter_by(user_id=user_id).one()
+        User.query.filter_by(user_id=user_id).one()
     except NoResultFound:
         return {"error": "User not found"}, 404 
     

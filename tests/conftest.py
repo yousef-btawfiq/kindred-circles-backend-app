@@ -5,6 +5,10 @@ from datetime import datetime
 from freezegun import freeze_time   
 
 TIMEFREEZE = "2025-01-01 00:00:00"
+AVAILABILITY_ENDPOINT_PREFIX = "/api/v1/availability"
+USER_ENDPOINT_PREFIX = "/api/v1/users"
+PREF_ENDPOINT_PREFIX = "/api/v1/prefs"
+TOPICS_ENDPOINT_PREFIX = "/api/v1/topics"
 
 @pytest.fixture
 def app():
@@ -36,6 +40,14 @@ def user_data():
     }
 
 @pytest.fixture
+@freeze_time(TIMEFREEZE)
+def user_obj(user_data): 
+    user = User.from_dict(user_data)
+    user.user_id = "user123"
+    user.created_at = datetime.now()
+    return user 
+
+@pytest.fixture
 def preferences_data(): 
     return {
             "camera_ok": True,
@@ -43,9 +55,9 @@ def preferences_data():
         }
 
 @pytest.fixture
-@freeze_time(TIMEFREEZE)
-def user_obj(user_data): 
-    user = User.from_dict(user_data)
-    user.user_id = "user123"
-    user.created_at = datetime.now()
-    return user 
+def availability_data(): 
+    return {
+        "user_id": "user123",
+        "slot_ids" : [1, 2, 4, 7]
+    }
+

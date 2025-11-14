@@ -43,6 +43,14 @@ class Preferences(db.Model):
         return camera_ok    
     
     
+    def to_dict(self): 
+        return {
+            "user_id": self.user_id,
+            "camera_ok": self.camera_ok,
+            "topics": json.loads(self.topics),
+            "created_at": self.created_at.isoformat()
+        }
+    
     @classmethod 
     def from_dict(cls, user_id, data): 
         return cls(
@@ -50,6 +58,7 @@ class Preferences(db.Model):
             camera_ok=data.get('camera_ok'),
             topics=data.get('topics')   
         )
+
     
 
 def list_topics_identifiers(): 

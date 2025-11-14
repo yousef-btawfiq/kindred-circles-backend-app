@@ -1,8 +1,7 @@
 from app.models import Preferences
+from tests.conftest import PREF_ENDPOINT_PREFIX, USER_ENDPOINT_PREFIX
 import json
 
-USER_ENDPOINT_PREFIX = "/api/v1/users"  
-PREF_ENDPOINT_PREFIX = "/api/v1/prefs"
 
 ### HEALTHCHECK TESTS ###
 

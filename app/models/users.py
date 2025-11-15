@@ -16,6 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(50), nullable=False)   
     age = db.Column(db.Integer, nullable=False)  
+    gender = db.Column(db.String(20), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -27,15 +28,23 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "age": self.age,
+            "gender": self.gender,
             "created_at": self.created_at.isoformat()
         }   
     
+    @validates('gender')
+    def validate_gender(self, key, gender):
+        if gender not in ["male", "female", "prefer_not_to_say"]: 
+            raise ValueError("Invalid gender value, must be one of: ['male', 'female', 'prefer_not_to_say']")   
+        return gender
+
     @classmethod 
     def from_dict(cls, data): 
         return cls(
             email=data.get('email'),
             first_name=data.get('first_name'), 
-            age=data.get('age') 
+            age=data.get('age'),
+            gender=data.get('gender')
         )   
     
     

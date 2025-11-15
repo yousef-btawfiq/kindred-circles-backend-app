@@ -36,6 +36,7 @@ def user_data():
     return {
         "email" : "test@test.com",
         "age" : 29, 
+        "gender" : "male",
         "first_name" : "Yousef"
     }
 
@@ -51,7 +52,7 @@ def user_obj(user_data):
 def preferences_data(): 
     return {
             "camera_ok": True,
-            "topics": ["social_anxiety", "making_friends_as_adult", "comparison"],
+            "topics": ["social_anxiety", "making_friends_as_adult", "overthinking"],
         }
 
 @pytest.fixture

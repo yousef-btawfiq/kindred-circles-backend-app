@@ -3,7 +3,7 @@ from flask import jsonify, request
 from app.models import db, User
 
 
-required_params = ["email", "first_name"]
+required_params = ["email", "first_name", "gender"]
 
 @users_bp.route("/create", methods=["POST"])
 def create_user():

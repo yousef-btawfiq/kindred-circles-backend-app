@@ -15,7 +15,7 @@ class Preferences(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return f'<Preferences {self.pref_id} for User {self.user_id}>'
+        return f'<Preferences {self.id} for User {self.user_id}>'
     
     @validates('topics')
     def validate_topics(self, key, topics_list):
@@ -47,8 +47,7 @@ class Preferences(db.Model):
         return {
             "user_id": self.user_id,
             "camera_ok": self.camera_ok,
-            "topics": json.loads(self.topics),
-            "created_at": self.created_at.isoformat()
+            "topics": json.loads(self.topics)
         }
     
     @classmethod 
@@ -56,7 +55,7 @@ class Preferences(db.Model):
         return cls(
             user_id=user_id,
             camera_ok=data.get('camera_ok'),
-            topics=data.get('topics')   
+            topics=data.get('topics')  
         )
 
     

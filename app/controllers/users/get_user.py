@@ -1,5 +1,5 @@
 from . import users_bp  
-from app.models import User
+from app.models import User, Preferences, Availability
 from flask import request 
 
 required_params = ["email"] 
@@ -14,5 +14,6 @@ def get_user_via_email():
         user = User.query.filter_by(user_id=user_id).first()
     else:
         return {"error": "Missing required parameter: email or user_id"}, 400  
-    
+
+
     return user.to_dict() if user else ({"error": "User not found"}, 404)

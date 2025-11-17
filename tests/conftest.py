@@ -9,6 +9,7 @@ AVAILABILITY_ENDPOINT_PREFIX = "/api/v1/availability"
 USER_ENDPOINT_PREFIX = "/api/v1/users"
 PREF_ENDPOINT_PREFIX = "/api/v1/prefs"
 TOPICS_ENDPOINT_PREFIX = "/api/v1/topics"
+SESSION_ENDPOINT_PREFIX = "/api/v1/sessions"
 
 @pytest.fixture
 def app():
@@ -62,3 +63,19 @@ def availability_data():
         "slot_ids" : [1, 2, 4, 7]
     }
 
+@pytest.fixture
+@freeze_time(TIMEFREEZE)
+def session_data():
+    return {
+        "start_time": "2025-01-01T09:00:00",
+        "duration": 60,
+        "room_name": "room123",
+        "audio_only": False
+    }
+
+@pytest.fixture
+def session_user_data():
+    return {
+        "session_id": "session123",
+        "user_id": "user123",
+    }

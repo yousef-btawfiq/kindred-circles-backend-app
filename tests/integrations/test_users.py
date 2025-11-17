@@ -26,7 +26,7 @@ def test_duplicate_user_creation_fails(client, user_data):
     assert resp1.status_code == 201
 
     resp2 = client.post(f"{USER_ENDPOINT_PREFIX}/create", json=user_data)
-    assert resp2.status_code == 400
+    assert resp2.status_code == 409
     assert "error" in resp2.get_json()
 
     user_rec = User.query.filter_by(user_id=data["user_id"]).one()

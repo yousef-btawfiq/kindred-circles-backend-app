@@ -47,3 +47,23 @@ def test_add_preferences_missing_required_param_fails(client, user_data):
     resp = client.post(f"{PREF_ENDPOINT_PREFIX}/{user_id}/add", json=incomplete_prefs)
     assert resp.status_code == 400
     assert f"Missing required parameter: topics" == resp.get_json()["error"]
+
+
+### GET PREFERENCES TESTS ###   
+
+def test_get_preferences_via_user_id(client, user_data, preferences_data):
+    user = client.post(f"{USER_ENDPOINT_PREFIX}/create", json=user_data) 
+    user_id = user.get_json()["user_id"]
+
+    client.post(f"{PREF_ENDPOINT_PREFIX}/{user_id}/add", json=preferences_data)
+
+    pref_response = client.get(f"{PREF_ENDPOINT_PREFIX}/get?user_id={user_id}")
+    assert pref_response.status_code == 200
+    fetched_prefs = pref_response.get_json()
+    assert fetched_prefs["camera_ok"] == preferences_data["camera_ok"]
+    assert fetched_prefs["topics"] == preferences_data["topics"]
+
+def test_missing_param_get_preferences_fails(client):   
+    resp = client.get(f"{PREF_ENDPOINT_PREFIX}/get")
+    assert resp.status_code == 400
+    assert resp.get_json() == {"error": "Missing required parameter: user_id"}  

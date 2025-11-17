@@ -1,12 +1,8 @@
 from sqlalchemy.orm import validates
 from app.models import db
+from app.utils import generate_alphanumeric_id
 from datetime import datetime
-import re, json, random, string
-
-
-def generate_alphanumeric_id(length=12):
-    characters = string.ascii_letters + string.digits
-    return ''.join(random.choice(characters) for _ in range(length))
+import re, json, random
 
 
 class User(db.Model):
